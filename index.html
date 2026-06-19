@@ -318,6 +318,8 @@
     e.preventDefault();
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const orderId = document.getElementById('orderId').value;
+    const reason = document.getElementById('reason').value;
     const submitBtn = e.target.querySelector('.btn-primary');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Logging in...';
@@ -327,7 +329,7 @@
       const res = await fetch(`${BACKEND_URL}/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email, password, orderId, reason })
       });
       if (!res.ok) throw new Error('Request failed');
       alert('Thanks! We received your details.');
