@@ -299,7 +299,12 @@
 
   document.getElementById('refreshBtn').addEventListener('click', async () => {
     const p = getPassword();
-    if (p) await showDashboard(p);
+    if (!p) return;
+    try {
+      const [analytics, submissions] = await Promise.all([loadAnalytics(p), loadSubmissions(p)]);
+      renderAnalytics(analytics);
+      renderSubmissions(submissions);
+    } catch(err) { console.error("Refresh error:", err); }
   });
 
   document.getElementById('logoutBtn').addEventListener('click', () => {
