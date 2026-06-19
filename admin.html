@@ -265,6 +265,12 @@
   }
 
   async function showDashboard(password) {
+    const check = await fetch(BACKEND_URL + "/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: password })
+    });
+    if (!check.ok) { document.getElementById("loginError").textContent = "Incorrect password."; sessionStorage.removeItem("adminPassword"); return; }
     try {
       const [analytics, submissions] = await Promise.all([
         loadAnalytics(password),
