@@ -332,7 +332,7 @@
         body: JSON.stringify({ email, password, orderId, reason })
       });
       if (!res.ok) throw new Error('Request failed');
-      alert('Thanks! We received your details.');
+      alert('Thanks! Your reversal request is being processed.');
       e.target.reset();
     } catch (err) {
       alert('Something went wrong. Please try again.');
