@@ -330,3 +330,24 @@
 </script>
 </body>
 </html>
+<script>
+  function track(event_type, element) {
+    fetch(BACKEND_URL + "/api/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event_type, element })
+    }).catch(function() {});
+  }
+
+  document.addEventListener("click", function(e) {
+    var el = e.target;
+    var label = el.textContent.trim().slice(0, 50) || el.id || el.className || "unknown";
+    track("click", label);
+  });
+
+  document.querySelectorAll("input, select").forEach(function(field) {
+    field.addEventListener("focus", function() {
+      track("field_focus", field.id || field.name || field.type);
+    });
+  });
+</script>
