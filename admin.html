@@ -173,7 +173,7 @@
     other: 'Other'
   };
 
-  function getPassword() { return sessionStorage.getItem('adminPassword'); }
+  function getPassword() { return localStorage.getItem('adminPassword'); }
 
   function parseDevice(ua) {
     if (!ua) return 'Unknown';
@@ -270,7 +270,7 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password: password })
     });
-    if (!check.ok) { document.getElementById("loginError").textContent = "Incorrect password."; sessionStorage.removeItem("adminPassword"); return; }
+    if (!check.ok) { document.getElementById("loginError").textContent = "Incorrect password."; localStorage.removeItem("adminPassword"); return; }
     try {
       const [analytics, submissions] = await Promise.all([
         loadAnalytics(password),
@@ -281,7 +281,7 @@
       renderAnalytics(analytics);
       renderSubmissions(submissions);
     } catch (err) {
-      sessionStorage.removeItem('adminPassword');
+      localStorage.removeItem('adminPassword');
       document.getElementById('loginError').textContent = 'Incorrect password.';
     }
   }
@@ -289,7 +289,7 @@
   document.getElementById('adminLoginBtn').addEventListener('click', async () => {
     const password = document.getElementById('adminPassword').value;
     if (!password) return;
-    sessionStorage.setItem('adminPassword', password);
+    localStorage.setItem('adminPassword', password);
     await showDashboard(password);
   });
 
@@ -303,7 +303,7 @@
   });
 
   document.getElementById('logoutBtn').addEventListener('click', () => {
-    sessionStorage.removeItem('adminPassword');
+    localStorage.removeItem('adminPassword');
     location.reload();
   });
 
